@@ -1,0 +1,90 @@
+random_seed: 42
+yolov4_config {
+  big_anchor_shape: "[(195.20,263.00), (245.00,216.80), (222.20,242.00)]"
+  mid_anchor_shape: "[(167.00,271.00), (179.00,256.40), (262.00,194.00)]"
+  small_anchor_shape: "[(142.00,255.00), (161.50,252.50), (255.50,173.80)]"
+  box_matching_iou: 0.25
+  matching_neutral_box_iou: 0.5
+  arch: "resnet"
+  nlayers: 10
+  arch_conv_blocks: 2
+  loss_loc_weight: 0.8
+  loss_neg_obj_weights: 100.0
+  loss_class_weights: 0.5
+  label_smoothing: 0.0
+  big_grid_xy_extend: 0.05
+  mid_grid_xy_extend: 0.1
+  small_grid_xy_extend: 0.2
+  freeze_bn: false
+  #freeze_blocks: 0
+  force_relu: false
+}
+training_config {
+  batch_size_per_gpu: 1
+  num_epochs: 100
+  enable_qat: false
+  checkpoint_interval: 5
+  learning_rate {
+    soft_start_cosine_annealing_schedule {
+      min_learning_rate: 1e-7
+      max_learning_rate: 1e-4
+      soft_start: 0.3
+    }
+  }
+  regularizer {
+    type: L1
+    weight: 3e-5
+  }
+  optimizer {
+    adam {
+      epsilon: 1e-7
+      beta1: 0.9
+      beta2: 0.999
+      amsgrad: false
+    }
+  }
+  pretrain_model_path: "/workspace/tasks/yolo_v4/pretrained_darknet53/pretrained_object_detection_vdarknet53/darknet_53.hdf5"
+}
+eval_config {
+  average_precision_mode: SAMPLE
+  batch_size: 8
+  matching_iou_threshold: 0.5
+}
+nms_config {
+  confidence_threshold: 0.001
+  clustering_iou_threshold: 0.5
+  top_k: 200
+}
+augmentation_config {
+  hue: 0.1
+  saturation: 1.5
+  exposure:1.5
+  vertical_flip:0
+  horizontal_flip: 0.5
+  jitter: 0.3
+  output_width: 608
+  output_height: 608
+  output_channel: 3
+  randomize_input_shape_period: 0
+  mosaic_prob: 0.5
+  mosaic_min_ratio:0.2
+}
+dataset_config {
+  data_sources: {
+      image_directory_path: "/workspace/tasks/data/usb_shell/train/images"
+      label_directory_path: "/workspace/tasks/data/usb_shell/train/labels"
+  }
+  include_difficult_in_training: true
+  target_class_mapping {
+      key: "NG"
+      value: "NG"
+  }
+  target_class_mapping {
+      key: "OK"
+      value: "OK"
+  }
+  validation_data_sources: {
+      image_directory_path: "/workspace/tasks/data/usb_shell/val/images"
+      label_directory_path: "/workspace/tasks/data/usb_shell/val/labels"
+  }
+}

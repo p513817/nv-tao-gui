@@ -1,0 +1,40 @@
+#!/bin/bash
+
+CHECK_TOOL=check-env
+
+BIG="figlet -k -w 0.1 "
+# COLOR="lolcat --spread 1.0 --animate --speed 100.0"
+
+hi_eco(){
+    clear
+    echo "Welcom to TAO-ECO" | $BIG 
+    echo "This environment is for dataset and inference via TensorRT"
+    echo -e "\nYou Can Check System's Info via '${CHECK_TOOL}'\n" 
+}
+
+hi_ds(){
+    clear
+    echo "Welcom to TAO-ECO" | $BIG
+    echo "This environment is for deep stream"
+    echo -e "\nYou Can Check System's Info via '${CHECK_TOOL}'\n"
+}
+
+# option=$1
+
+# if [[ -z $option ]];then
+#     hi_eco
+#     exit
+# else
+#     case $option in
+#         eco) # display Help
+#             hi_eco
+#             exit;;
+#         deepstream)
+#             hi_ds
+#             exit;;
+#     esac
+# fi
+
+hi_eco
+
+/bin/bash
