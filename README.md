@@ -1,5 +1,5 @@
-# nv-tao-gui
-the GUI version for NVIDIA TAO Toolkit.
+# nv-tao-gui ( itao )
+The QT version for NVIDIA TAO Toolkit, and it's the legacy version when I work in Innodisk called `iTAO`
 
 ## Pre-requisite
 1. [Docker](https://max-c.notion.site/Install-Docker-9a0927c9b8aa4455b66548843246152f)
